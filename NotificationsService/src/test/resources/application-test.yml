@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: notifications-service
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  cloud:
+    config:
+      enabled: false
+      discovery:
+        enabled: false
+      fail-fast: false
+      import-check:
+        enabled: false
+    discovery:
+      enabled: false
+    service-registry:
+      auto-registration:
+        enabled: false
+    bus:
+      enabled: false
+  main:
+    allow-bean-definition-overriding: true
+    cloud-platform: none
+    banner-mode: off
+  config:
+    use-legacy-processing: true
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.config.client.ConfigClientAutoConfiguration
+      - org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+      - org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClientAutoConfiguration
+
+eureka:
+  client:
+    enabled: false
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: ""
+
+server:
+  port: 0
+
+vonage:
+  api:
+    key: test-key
+    secret: test-secret
+
+logging:
+  level:
+    root: INFO
+    com.ebanking.notificationsservice: DEBUG
+    org.springframework.test: INFO

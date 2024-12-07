@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: notifications-service
+  cloud:
+    config:
+      enabled: false
+      discovery:
+        enabled: false
+      fail-fast: false
+      import-check:
+        enabled: false
+    discovery:
+      enabled: false
+    service-registry:
+      auto-registration:
+        enabled: false
+    bus:
+      enabled: false
+  main:
+    allow-bean-definition-overriding: true
+    cloud-platform: none
+  config:
+    use-legacy-processing: true
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.config.client.ConfigClientAutoConfiguration
+      - org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration
+      - org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClientAutoConfiguration
+
+eureka:
+  client:
+    enabled: false
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: ""
+
+server:
+  port: 0
+
+vonage:
+  api:
+    key: test-key-123
+    secret: test-secret-456
+    brand: E-Banking-Test

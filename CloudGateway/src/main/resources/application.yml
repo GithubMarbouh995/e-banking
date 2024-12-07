@@ -1,0 +1,50 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: API-GATEWAY
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:9296}
+  cloud:
+    config:
+      enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: NOTIFICATION-SERVICE
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/api/notifications/**
+        - id: TRANSFER-SERVICE
+          uri: lb://TRANSFER-SERVICE
+          predicates:
+            - Path=/api/transfers/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: TRANSFER-SERVICE
+                fallbackuri: forward:/transferServiceFallBack
+
+        - id: CLIENT-SERVICE
+          uri: lb://CLIENT-SERVICE
+          predicates:
+            - Path=/api/client/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CLIENT-SERVICE
+                fallbackuri: forward:/clientServiceFallBack
+
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka

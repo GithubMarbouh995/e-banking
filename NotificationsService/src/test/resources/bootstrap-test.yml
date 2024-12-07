@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+      discovery:
+        enabled: false
+      fail-fast: false
+      import-check:
+        enabled: false
+      watch:
+        enabled: false
+      retry:
+        enabled: false
+    discovery:
+      enabled: false
+  config:
+    use-legacy-processing: true
+  main:
+    cloud-platform: none
