@@ -15,7 +15,7 @@ public class NotificationsServcieImpl implements NotificationsServcie {
 //    @Autowired
 //    Producer producer;
 
-    private final VonageClient vonageClient = VonageClient.builder().apiKey("3073e7dc").apiSecret("ZCZVrdhhblXHWQq1").build();
+    private final VonageClient vonageClient = VonageClient.builder().apiKey("c29b20a5").apiSecret("44tTUtl6ywxhRJhm").build();
     private final String BRAND_NAME = "Vonage APIs";
 
     @Override
@@ -55,7 +55,6 @@ public class NotificationsServcieImpl implements NotificationsServcie {
     public SendVerificationCodeResponse verifyIdentity(String phone, String code) {
         String msg = "Votre code de vérification est : " + code;
         TextMessage message = new TextMessage(BRAND_NAME, phone, msg);
-
         SmsSubmissionResponse response = vonageClient.getSmsClient().submitMessage(message);
 
         if (response.getMessages().get(0).getStatus() == MessageStatus.OK) {

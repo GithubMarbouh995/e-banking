@@ -79,13 +79,13 @@ public class NotificationsController {
         return ResponseEntity.ok("Notifications service is running");
     }
 
-    // @PostMapping("/test")
-    // public ResponseEntity<String> test(@RequestBody Customer customer) {
-    //     try {
-    //         return ResponseEntity.ok(notificationsService.test(customer));
-    //     } catch (JsonProcessingException e) {
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-    //                 .body("Failed to process customer: " + e.getMessage());
-    //     }
-    // }
+    @PostMapping("/testt")
+    public ResponseEntity<String> test(@RequestBody Customer customer) {
+        try {
+            return ResponseEntity.ok(notificationsService.test(customer));
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to process customer: " + e.getMessage());
+        }
+    }
 }

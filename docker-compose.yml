@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  registry-service:
+    build: ./RegistryService
+    ports:
+      - "8761:8761"
+    networks:
+      - ebanking-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  config-server:
+    build: ./ConfigServer
+    ports:
+      - "8888:8888"
+    networks:
+      - ebanking-network
+    depends_on:
+      registry-service:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://registry-service:8761/eureka/
+
+  cloud-gateway:
+    build: ./CloudGateway
+    ports:
+      - "9090:9090"
+    networks:
+      - ebanking-network
+    depends_on:
+      - config-server
+      - registry-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://registry-service:8761/eureka/
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+
+  notifications-service:
+    build: ./NotificationsService
+    ports:
+      - "8082:8082"
+    networks:
+      - ebanking-network
+    depends_on:
+      - config-server
+      - registry-service
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://registry-service:8761/eureka/
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+
+networks:
+  ebanking-network:
+    driver: bridge

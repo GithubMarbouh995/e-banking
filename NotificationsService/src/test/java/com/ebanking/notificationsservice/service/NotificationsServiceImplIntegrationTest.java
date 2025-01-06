@@ -50,6 +50,6 @@ class NotificationsServiceImplIntegrationTest {
         // Then
         assertNotNull(result);
         assertEquals(code, result.getCode());
-        assertTrue(result.getMessage().contains(code));
+        assertEquals("Code vérifié avec succès", result.getMessage());
     }
 }

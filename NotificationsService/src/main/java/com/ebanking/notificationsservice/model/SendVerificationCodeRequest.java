@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class SendVerificationCodeRequest {
     private  String phone ;
     private String  code;
-
 }
